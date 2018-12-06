@@ -28,7 +28,6 @@ WHEAT_CHROMOSOMES = [
     "chr6D",   
     "chr7D",
 ]
-
 GUI_CONFIG = {
     "combo_box_size": 250,
     "input_size": 99,
