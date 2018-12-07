@@ -65,7 +65,10 @@ class MainWindow(QMainWindow):
         self.menuHelp = self.menuBar().addMenu("&Help")
         self.actionAbout = QAction("&About",self)
         self.actionAbout.triggered.connect(self.about)
+        self.actionUsage = QAction("&Usage",self)
+        self.actionUsage.triggered.connect(self.usage)
         self.menuHelp.addActions([self.actionAbout])
+        self.menuHelp.addActions([self.actionUsage])
         
         # Setup main widget
         self.widget = QDialog()
@@ -231,21 +234,23 @@ class MainWindow(QMainWindow):
                     for ind,x in enumerate(data1):
                         if ind in list1_index2:
                             print("It's working!!")
-                            list1_ID.append(x.split(' ')[0])
-                            list1_CHR.append(x.split(' ')[1])
-                            list1_POS.append(x.split(' ')[2])
-                            list1_Q.append(x.split(' ')[3])
-                            list1_SEQ.append(x.split(' ')[4])
+                            parts1 = x.split(' ')
+                            list1_ID.append(parts1[0])
+                            list1_CHR.append(parts1[1])
+                            list1_POS.append(parts1[2])
+                            list1_Q.append(parts1[3])
+                            list1_SEQ.append(parts1[4])
                 else:
                     GUI_CONFIG["TagLenG1"] = len(list1_index)
                     self.tableWidget1.setRowCount(GUI_CONFIG["TagLenG1"])
                     for ind,x in enumerate(data1):
                         if ind in list1_index:
-                            list1_ID.append(x.split(' ')[0])
-                            list1_CHR.append(x.split(' ')[1])
-                            list1_POS.append(x.split(' ')[2])
-                            list1_Q.append(x.split(' ')[3])
-                            list1_SEQ.append(x.split(' ')[4])
+                            parts1 = x.split(' ')
+                            list1_ID.append(parts1[0])
+                            list1_CHR.append(parts1[1])
+                            list1_POS.append(parts1[2])
+                            list1_Q.append(parts1[3])
+                            list1_SEQ.append(parts1[4])
                 
             else:
                 GUI_CONFIG["TagLenG1"] = len(data1)
@@ -253,11 +258,12 @@ class MainWindow(QMainWindow):
                 self.tableWidget1.setRowCount(GUI_CONFIG["TagLenG1"])
 
                 for x in data1:
-                    list1_ID.append(x.split(' ')[0])
-                    list1_CHR.append(x.split(' ')[1])
-                    list1_POS.append(x.split(' ')[2])
-                    list1_Q.append(x.split(' ')[3])
-                    list1_SEQ.append(x.split(' ')[4])
+                    parts1 = x.split(' ')
+                    list1_ID.append(parts1[0])
+                    list1_CHR.append(parts1[1])
+                    list1_POS.append(parts1[2])
+                    list1_Q.append(parts1[3])
+                    list1_SEQ.append(parts1[4])
 
             for col,ID in enumerate(list1_ID, start=0):
                 self.tableWidget1.setItem(col,0,QTableWidgetItem(ID))
@@ -290,21 +296,23 @@ class MainWindow(QMainWindow):
                     self.tableWidget2.setRowCount(GUI_CONFIG["TagLenG2"])
                     for ind,x in enumerate(data2):
                         if ind in list2_index2:
-                            list2_ID.append(x.split(' ')[0])
-                            list2_CHR.append(x.split(' ')[1])
-                            list2_POS.append(x.split(' ')[2])
-                            list2_Q.append(x.split(' ')[3])
-                            list2_SEQ.append(x.split(' ')[4])
+                            parts2 = x.split(' ')
+                            list2_ID.append(parts2[0])
+                            list2_CHR.append(parts2[1])
+                            list2_POS.append(parts2[2])
+                            list2_Q.append(parts2[3])
+                            list2_SEQ.append(parts2[4])
                 else:
                     GUI_CONFIG["TagLenG2"] = len(list2_index)
                     self.tableWidget2.setRowCount(GUI_CONFIG["TagLenG2"])
                     for ind,x in enumerate(data2):
                         if ind in list2_index:
-                            list2_ID.append(x.split(' ')[0])
-                            list2_CHR.append(x.split(' ')[1])
-                            list2_POS.append(x.split(' ')[2])
-                            list2_Q.append(x.split(' ')[3])
-                            list2_SEQ.append(x.split(' ')[4])
+                            parts2 = x.split(' ')
+                            list2_ID.append(parts2[0])
+                            list2_CHR.append(parts2[1])
+                            list2_POS.append(parts2[2])
+                            list2_Q.append(parts2[3])
+                            list2_SEQ.append(parts2[4])
                 
             else:
                 GUI_CONFIG["TagLenG2"] = len(data2)
@@ -312,11 +320,12 @@ class MainWindow(QMainWindow):
                 self.tableWidget2.setRowCount(GUI_CONFIG["TagLenG2"])
 
                 for x in data2:
-                    list2_ID.append(x.split(' ')[0])
-                    list2_CHR.append(x.split(' ')[1])
-                    list2_POS.append(x.split(' ')[2])
-                    list2_Q.append(x.split(' ')[3])
-                    list2_SEQ.append(x.split(' ')[4])
+                    parts2 = x.split(' ')
+                    list2_ID.append(parts2[0])
+                    list2_CHR.append(parts2[1])
+                    list2_POS.append(parts2[2])
+                    list2_Q.append(parts2[3])
+                    list2_SEQ.append(parts2[4])
 
             for col,ID in enumerate(list2_ID, start=0):
                 self.tableWidget2.setItem(col,0,QTableWidgetItem(ID))
@@ -332,15 +341,31 @@ class MainWindow(QMainWindow):
         self.tableWidget1.resizeColumnsToContents()
         self.tableWidget2.resizeColumnsToContents()
 
+        for ind, seq in enumerate(list1_SEQ):
+            if str(self.searcher.text()) != '':
+                if (str(self.searcher.text())).upper() in list1_SEQ[ind]:
+                    for j in range(self.tableWidget1.columnCount()):
+                        self.tableWidget1.item(ind,j).setBackground(QtGui.QColor(112,199,211))
+        for ind, seq in enumerate(list2_SEQ):
+            if str(self.searcher.text()) != '':
+                if (str(self.searcher.text())).upper() in list2_SEQ[ind]:
+                    for j in range(self.tableWidget2.columnCount()):
+                        self.tableWidget2.item(ind,j).setBackground(QtGui.QColor(112,199,211))
+
 
     def about(self) :
         QMessageBox.about(self, 
             "About Tag Comparer",
-            """<b>Visual Tag Analyzer</b>
-               <p>Copyright &copy; 2017 Jeremy Roberts, All Rights Reserved.
-               <p>Python %s -- Qt %s -- PyQt %s on %s""" %
-            (platform.python_version(),
-             QT_VERSION_STR, PYQT_VERSION_STR, platform.system()))
+            "<b>Cameron Amos ME701 Final Project<b>")
+    def usage(self):
+        QMessageBox.about(self, 
+            "Tag Comparer Usage",
+            """<p>It is possible to compare two different tags sets from two different genomes at the same time.
+            <p> First, Load in a tag file (.txt) using the File -> Import Genome Tags.
+            <p> Now it is possible to select that genome from the Genome combo boxes.
+            <p> You may query increased specificity on which tags you would like to show up on the screen, by choosing what chromosome and what bp position range you desire.
+            <p> You may also highlight tags containing a desired sequence by inputting that sequence into the 'Search tags on screen' search bar.
+            """)
 
 app = QApplication(sys.argv)
 widget = MainWindow()
